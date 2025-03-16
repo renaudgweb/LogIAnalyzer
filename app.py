@@ -1,8 +1,11 @@
+from dotenv import load_dotenv
 import os
 import smtplib
 # import openai
 from mistralai import Mistral
 from email.mime.text import MIMEText
+
+load_dotenv()
 
 # Configuration
 LOGWATCH_REPORT_PATH = "/var/log/logwatch_report.log"
