@@ -19,7 +19,16 @@ SMTP_PASSWORD = os.getenv("SMTP_PASSWORD")
 LOG_CHECK_INTERVAL = 300  # Vérification toutes les 5 minutes
 AI_TEMPERATURE = 0.5  # Ajuster pour contrôler la créativité des réponses
 AI_MAX_TOKENS = 500  # Limiter la longueur des réponses
-DAILY_REPORT_FILE = "/var/log/log_analyzer_daily_report.txt"
+DAILY_REPORT_FILE = "/tmp/log_analyzer_daily_report.txt"
+
+# Vérifier si le fichier existe, sinon le créer
+if not os.path.exists(DAILY_REPORT_FILE):
+    try:
+        with open(DAILY_REPORT_FILE, "w") as file:
+            file.write("📊 Rapport quotidien des logs\n")
+        print(f"📄 Fichier {DAILY_REPORT_FILE} créé avec succès.")
+    except PermissionError:
+        print(f"❌ Permission refusée : Impossible de créer {DAILY_REPORT_FILE}. Exécute le script avec sudo.")
 
 
 def read_new_logs(log_file, last_position):
@@ -131,7 +140,7 @@ def monitor_logs():
         schedule.run_pending()
         time.sleep(LOG_CHECK_INTERVAL)
 
-# Programmer l'envoi automatique du rapport quotidien à minuit
+# Programmer l'envoi automatique du rapport quotidien à 4h du matin
 schedule.every().day.at("04:00").do(send_daily_report)
 
 if __name__ == "__main__":
