@@ -13,8 +13,8 @@ Ce script analyse en continu les logs des requêtes arrivant sur le serveur web 
 
 ### 1️⃣ Cloner le dépôt
 ```bash
-git clone https://github.com/ton-utilisateur/logwatch-analyzer.git
-cd logwatch-analyzer
+git clone https://github.com/ton-utilisateur/LogIAnalyzer.git
+cd LogIAnalyzer
 ```
 
 ### 2️⃣ Installer les dépendances
@@ -36,7 +36,7 @@ source /etc/environment
 ### 4️⃣ Configurer `systemd` pour un démarrage automatique
 Crée un fichier de service :
 ```bash
-sudo nano /etc/systemd/system/logwatch_analyzer.service
+sudo nano /etc/systemd/system/logianalyzer.service
 ```
 Ajoute ceci :
 ```ini
@@ -45,8 +45,8 @@ Description=🚀 Surveillance et analyse des logs serveur
 After=network.target
 
 [Service]
-ExecStart=/usr/bin/python3 /chemin/vers/logwatch_analyzer.py
-WorkingDirectory=/chemin/vers/logwatch-analyzer
+ExecStart=/usr/bin/python3 /chemin/vers/logianalyzer.py
+WorkingDirectory=/chemin/vers/LogIAnalyzer
 Restart=always
 User=ton_utilisateur
 Environment="OPENAI_API_KEY=${OPENAI_API_KEY}"
@@ -59,31 +59,31 @@ WantedBy=multi-user.target
 ### 5️⃣ Activer et démarrer le service
 ```bash
 sudo systemctl daemon-reload
-sudo systemctl enable logwatch_analyzer
-sudo systemctl start logwatch_analyzer
+sudo systemctl enable logianalyzer
+sudo systemctl start logianalyzer
 ```
 
 ### 6️⃣ Vérifier que le service fonctionne
 ```bash
-sudo systemctl status logwatch_analyzer
+sudo systemctl status logianalyzer
 ```
 
 ## 🔍 Logs et Debugging
 - 📜 Consulter les logs du service :
 ```bash
-journalctl -u logwatch_analyzer -f
+journalctl -u logianalyzer -f
 ```
 - 🔄 Redémarrer le service après modification :
 ```bash
-sudo systemctl restart logwatch_analyzer
+sudo systemctl restart logianalyzer
 ```
 
 ## ❌ Désinstallation
 Désactiver et supprimer le service :
 ```bash
-sudo systemctl stop logwatch_analyzer
-sudo systemctl disable logwatch_analyzer
-sudo rm /etc/systemd/system/logwatch_analyzer.service
+sudo systemctl stop logianalyzer
+sudo systemctl disable logianalyzer
+sudo rm /etc/systemd/system/logianalyzer.service
 sudo systemctl daemon-reload
 ```
 
