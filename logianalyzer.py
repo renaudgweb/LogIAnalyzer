@@ -10,10 +10,10 @@ from concurrent.futures import ThreadPoolExecutor
 
 # Configuration
 LOG_FILES = [
-                "/var/log/apache2/error.log",
-                "/var/log/apache2/access.log",
-                "/var/log/auth.log"
-            ]
+    "/var/log/apache2/error.log",
+    "/var/log/apache2/access.log",
+    "/var/log/auth.log"
+]
 AI_API_KEY = os.getenv("AI_API_KEY")
 EMAIL_SENDER = "ton_email@mail.com"
 EMAIL_RECEIVER = "destinataire@mail.com"
@@ -22,7 +22,7 @@ SMTP_PORT = 587
 SMTP_PASSWORD = os.getenv("SMTP_PASSWORD")
 LOG_CHECK_INTERVAL = 300  # Vérification toutes les 5 minutes
 AI_TEMPERATURE = 0.5  # Ajuster pour contrôler la créativité des réponses
-AI_MAX_TOKENS = 500  # Limiter la longueur des réponses
+AI_MAX_TOKENS = 4096  # Limiter la longueur des réponses
 DAILY_REPORT_FILE = "/var/log/log_analyzer_daily_report.txt"
 
 # Vérifier si le fichier existe, sinon le créer
@@ -32,7 +32,8 @@ if not os.path.exists(DAILY_REPORT_FILE):
             file.write("📊 Rapport quotidien des logs\n")
         print(f"📄 Fichier {DAILY_REPORT_FILE} créé avec succès.")
     except PermissionError:
-        print(f"❌ Permission refusée : Impossible de créer {DAILY_REPORT_FILE}. Exécute le script avec sudo.")
+        print(f"❌ Permission refusée : Impossible de créer "
+              f"{DAILY_REPORT_FILE}. Exécute le script avec sudo.")
 
 
 def read_new_logs(log_file, last_position):
@@ -61,20 +62,29 @@ def analyze_logs_with_ai(logs):
         model= "mistral-large-latest",
         temperature=AI_TEMPERATURE,
         max_tokens=AI_MAX_TOKENS,
-        messages=[
+        messages = [
             {
                 "role": "system",
                 "content": (
-                    "Tu es un expert en analyse de logs Linux."
-                    "Attribue un score de gravité de 1 à 10 aux anomalies "
-                    "détectées."
+                    "Tu es un expert en cybersécurité et en analyse "
+                    "de logs Linux. "
+                    "Pour chaque anomalie détectée, attribue un score "
+                    "de gravité de 1 à 10, où 1 signifie une anomalie "
+                    "bénigne et 10 représente une situation critique "
+                    "qui nécessite une action immédiate. "
+                    "En plus du score, si possible, propose une action "
+                    "ou une recommandation pour résoudre ou atténuer "
+                    "l'anomalie. Sois précis et clair dans ton analyse."
                 ),
             },
             {
                 "role": "user",
                 "content": (
-                    f"Analyse ces logs et attribue un score de gravité aux "
-                    f"anomalies détectées :\n{''.join(logs)}"
+                    f"Analyse les logs suivants et attribue un score de "
+                    f"gravité aux anomalies détectées, en suivant les "
+                    f"critères ci-dessus. Pour chaque anomalie, propose "
+                    f"une solution ou une recommandation si possible :"
+                    f"\n{''.join(logs)}"
                 ),
             }
         ]
