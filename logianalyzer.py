@@ -2,23 +2,24 @@ import os
 import smtplib
 # import openai
 from mistralai import Mistral
-import glob
 import time
+import datetime
+import schedule
 from email.mime.text import MIMEText
 from concurrent.futures import ThreadPoolExecutor
-
 
 # Configuration
 LOG_FILES = ["/var/log/nginx/access.log", "/var/log/apache2/access.log"]
 AI_API_KEY = os.getenv("AI_API_KEY")
-EMAIL_SENDER = "ton_email@gmail.com"
-EMAIL_RECEIVER = "destinataire@gmail.com"
-SMTP_SERVER = "smtp.gmail.com"
+EMAIL_SENDER = "ton_email@mail.com"
+EMAIL_RECEIVER = "destinataire@mail.com"
+SMTP_SERVER = "smtp.mail.com"
 SMTP_PORT = 587
 SMTP_PASSWORD = os.getenv("SMTP_PASSWORD")
 LOG_CHECK_INTERVAL = 300  # Vérification toutes les 5 minutes
 AI_TEMPERATURE = 0.5  # Ajuster pour contrôler la créativité des réponses
 AI_MAX_TOKENS = 500  # Limiter la longueur des réponses
+DAILY_REPORT_FILE = "/var/log/log_analyzer_daily_report.txt"
 
 
 def read_new_logs(log_file, last_position):
@@ -35,7 +36,7 @@ def read_new_logs(log_file, last_position):
 
 
 def analyze_logs_with_ai(logs):
-    """Analyse les logs via OpenAI pour détecter des anomalies."""
+    """Analyse les logs via IA pour détecter des anomalies."""
     if not logs:
         return "Pas de nouvelles entrées dans les logs."
 
@@ -60,7 +61,7 @@ def analyze_logs_with_ai(logs):
                 "role": "user",
                 "content": (
                     f"Analyse ces logs et attribue un score de gravité aux "
-                    f"anomalies détectées :\n{logs}"
+                    f"anomalies détectées :\n{''.join(logs)}"
                 ),
             }
         ]
@@ -86,6 +87,20 @@ def send_email(subject, body):
         print(f"Erreur lors de l'envoi de l'email : {e}")
 
 
+def send_daily_report():
+    """Envoie un compte rendu quotidien des analyses de logs."""
+    if os.path.exists(DAILY_REPORT_FILE):
+        with open(DAILY_REPORT_FILE, "r") as file:
+            report_content = file.read()
+
+        if report_content.strip():
+            subject = f"📊 Rapport quotidien des logs - {datetime.date.today()}"
+            send_email(subject, report_content)
+
+        # Réinitialiser le fichier après envoi
+        open(DAILY_REPORT_FILE, "w").close()
+
+
 def monitor_logs():
     """Surveille les fichiers de logs et analyse les nouvelles lignes à intervalles réguliers."""
     log_positions = {log_file: 0 for log_file in LOG_FILES}
@@ -103,14 +118,21 @@ def monitor_logs():
                 if new_logs:
                     analysis = analyze_logs_with_ai(new_logs)
                     print(f"Analyse des logs ({log_file}) :", analysis)
-                    send_email(f"Analyse des logs ({log_file}) :", analysis)
+
+                    # Stocker l'analyse dans le fichier de rapport quotidien
+                    with open(DAILY_REPORT_FILE, "a") as report_file:
+                        report_file.write(f"\n[{log_file}]\n{analysis}\n")
                     
                     severity_score = [int(s) for s in analysis.split() if s.isdigit() and 1 <= int(s) <= 10]
                     if severity_score and max(severity_score) >= 7:
                         send_email(f"Alerte Log - Anomalie critique dans {log_file}", analysis)
         
+        # Vérifier s'il est temps d'envoyer le rapport quotidien
+        schedule.run_pending()
         time.sleep(LOG_CHECK_INTERVAL)
 
+# Programmer l'envoi automatique du rapport quotidien à minuit
+schedule.every().day.at("04:00").do(send_daily_report)
 
 if __name__ == "__main__":
     monitor_logs()
