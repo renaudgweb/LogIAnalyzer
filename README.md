@@ -58,8 +58,7 @@ Description=Surveillance des logs avec OpenAI
 After=network.target
 
 [Service]
-User=myuser  # Remplacez par l'utilisateur ayant accès aux logs
-Group=mygroup
+User=root  # Remplacez par l'utilisateur ayant accès aux logs
 ExecStart=/usr/bin/python3 /chemin/vers/logianalyzer.py
 Restart=always
 Environment="AI_API_KEY=votre_cle_api_openai"
