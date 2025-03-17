@@ -50,6 +50,7 @@ Description=🚀 Surveillance et analyse des logs serveur
 After=network.target
 
 [Service]
+User=root  # Sinon, remplace par l’utilisateur qui a accès aux logs
 ExecStart=/usr/bin/python3 /chemin/vers/logianalyzer.py
 WorkingDirectory=/chemin/vers/LogIAnalyzer
 Restart=always
@@ -59,6 +60,11 @@ Environment="SMTP_PASSWORD=${SMTP_PASSWORD}"
 
 [Install]
 WantedBy=multi-user.target
+```
+
+### 5️⃣ Ajouter l’utilisateur au groupe "adm" (qui a accès aux logs) si besoin
+```bash
+sudo usermod -aG adm myuser # Remplace par l’utilisateur qui a accès aux logs
 ```
 
 ### 5️⃣ Activer et démarrer le service
