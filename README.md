@@ -17,7 +17,7 @@
 
 ### 1️⃣ Cloner le dépôt
 ```bash
-git clone https://github.com/ton-utilisateur/LogIAnalyzer.git
+git clone https://github.com/renaudgweb/LogIAnalyzer.git
 cd LogIAnalyzer
 ```
 
