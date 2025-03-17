@@ -7,23 +7,26 @@ import datetime
 import schedule
 from email.mime.text import MIMEText
 from concurrent.futures import ThreadPoolExecutor
+from configparser import ConfigParser
 
-# Configuration
-LOG_FILES = [
-    "/var/log/apache2/error.log",
-    "/var/log/apache2/access.log",
-    "/var/log/auth.log"
-]
+# Load configuration from a file
+config = ConfigParser()
+config.read('config.ini')
+
+# Read configuration values
+LOG_FILES = config.get('Settings', 'log_files').split(', ')
+EMAIL_SENDER = config.get('Settings', 'email_sender')
+EMAIL_RECEIVER = config.get('Settings', 'email_receiver')
+SMTP_SERVER = config.get('Settings', 'smtp_server')
+SMTP_PORT = config.getint('Settings', 'smtp_port')
+LOG_CHECK_INTERVAL = config.getint('Settings', 'log_check_interval')
+AI_TEMPERATURE = config.getfloat('Settings', 'ai_temperature')
+AI_MAX_TOKENS = config.getint('Settings', 'ai_max_tokens')
+DAILY_REPORT_FILE = config.get('Settings', 'daily_report_file')
+
+# Environment variables for sensitive data
 AI_API_KEY = os.getenv("AI_API_KEY")
-EMAIL_SENDER = "ton_email@mail.com"
-EMAIL_RECEIVER = "destinataire@mail.com"
-SMTP_SERVER = "smtp.mail.com"
-SMTP_PORT = 587
 SMTP_PASSWORD = os.getenv("SMTP_PASSWORD")
-LOG_CHECK_INTERVAL = 300  # Vérification toutes les 5 minutes
-AI_TEMPERATURE = 0.5  # Ajuster pour contrôler la créativité des réponses
-AI_MAX_TOKENS = 4096  # Limiter la longueur des réponses
-DAILY_REPORT_FILE = "/var/log/log_analyzer_daily_report.txt"
 
 # Vérifier si le fichier existe, sinon le créer
 if not os.path.exists(DAILY_REPORT_FILE):
