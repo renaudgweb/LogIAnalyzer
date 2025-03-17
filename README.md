@@ -46,7 +46,7 @@ Définissez les **variables d'environnement** pour les données sensibles, ajout
 AI_API_KEY="ta_cle_api"
 SMTP_PASSWORD="ton_mot_de_passe"
 ```
-Recharge les variables :
+Rechargez les variables :
 ```bash
 source /etc/environment
 ```
