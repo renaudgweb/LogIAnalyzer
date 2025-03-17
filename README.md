@@ -62,7 +62,7 @@ Environment="SMTP_PASSWORD=${SMTP_PASSWORD}"
 WantedBy=multi-user.target
 ```
 
-### 5️⃣ Ajouter l’utilisateur au groupe "adm" (qui a accès aux logs) si besoin
+### (Ajouter l’utilisateur au groupe "adm", qui a accès aux logs, si besoin)
 ```bash
 sudo usermod -aG adm myuser # Remplace par l’utilisateur qui a accès aux logs
 ```
