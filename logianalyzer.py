@@ -10,7 +10,7 @@ from concurrent.futures import ThreadPoolExecutor
 
 # Configuration
 LOG_FILES = ["/var/log/nginx/access.log", "/var/log/apache2/access.log"]
-API_KEY = os.getenv("API_KEY")
+AI_API_KEY = os.getenv("AI_API_KEY")
 EMAIL_SENDER = "ton_email@gmail.com"
 EMAIL_RECEIVER = "destinataire@gmail.com"
 SMTP_SERVER = "smtp.gmail.com"
@@ -39,8 +39,8 @@ def analyze_logs_with_ai(logs):
     if not logs:
         return "Pas de nouvelles entrées dans les logs."
 
-    # openai.api_key = API_KEY
-    client = Mistral(api_key=API_KEY)
+    # openai.api_key = AI_API_KEY
+    client = Mistral(api_key=AI_API_KEY)
     # response = openai.ChatCompletion.create(
     response = client.chat.complete(
         # model="gpt-4",

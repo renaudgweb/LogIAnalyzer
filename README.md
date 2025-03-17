@@ -25,7 +25,7 @@ pip install -r requirements.txt
 ### 3️⃣ Configurer les variables d'environnement
 Ajoute ces variables dans `/etc/environment` :
 ```bash
-OPENAI_API_KEY="ta_cle_api"
+AI_API_KEY="ta_cle_api"
 SMTP_PASSWORD="ton_mot_de_passe"
 ```
 Recharge les variables :
@@ -49,7 +49,7 @@ ExecStart=/usr/bin/python3 /chemin/vers/logianalyzer.py
 WorkingDirectory=/chemin/vers/LogIAnalyzer
 Restart=always
 User=ton_utilisateur
-Environment="OPENAI_API_KEY=${OPENAI_API_KEY}"
+Environment="AI_API_KEY=${AI_API_KEY}"
 Environment="SMTP_PASSWORD=${SMTP_PASSWORD}"
 
 [Install]
