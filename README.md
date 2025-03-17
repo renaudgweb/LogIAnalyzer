@@ -41,12 +41,15 @@ ai_max_tokens = 4096
 daily_report_file = /var/log/log_analyzer_daily_report.txt
 ```
 
-Définissez les **variables d'environnement** pour les données sensibles :
+Définissez les **variables d'environnement** pour les données sensibles, ajoutez ces variables dans `/etc/environment` :
 ```bash
-export AI_API_KEY="votre_cle_api_openai"
-export SMTP_PASSWORD="votre_mot_de_passe_smtp"
+AI_API_KEY="ta_cle_api"
+SMTP_PASSWORD="ton_mot_de_passe"
 ```
-Pour les rendre permanentes, ajoutez-les à votre **`~/.bashrc`** ou **`~/.profile`**.
+Recharge les variables :
+```bash
+source /etc/environment
+```
 
 ## ⚙️ Utilisation avec systemd
 
