@@ -133,11 +133,11 @@ def monitor_logs():
             futures = {}
             for log_file in LOG_FILES:
                 futures[log_file] = executor.submit(read_new_logs, log_file, log_positions[log_file])
-            
+
             for log_file, future in futures.items():
                 new_logs, new_position = future.result()
                 log_positions[log_file] = new_position
-                
+
                 if new_logs:
                     analysis = analyze_logs_with_ai(new_logs)
                     print(f"Analyse des logs ({log_file}) :", analysis)
@@ -145,11 +145,11 @@ def monitor_logs():
                     # Stocker l'analyse dans le fichier de rapport quotidien
                     with open(DAILY_REPORT_FILE, "a") as report_file:
                         report_file.write(f"\n[{log_file}]\n{analysis}\n")
-                    
+
                     severity_score = [int(s) for s in analysis.split() if s.isdigit() and 1 <= int(s) <= 10]
                     if severity_score and max(severity_score) >= 7:
                         send_email(f"Alerte Log - Anomalie critique dans {log_file}", analysis)
-        
+
         # Vérifier s'il est temps d'envoyer le rapport quotidien
         schedule.run_pending()
         time.sleep(LOG_CHECK_INTERVAL)
