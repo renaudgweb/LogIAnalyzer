@@ -1,12 +1,11 @@
-# 🚀 LogIAnalyzer
+# 📊 LogIAnalyzer - Surveillance et Analyse des Logs avec IA
 
 <p align="center">
   <a href="https://github.com/renaudgweb/LogIAnalyzer/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License: MIT"></a>
   <a href="https://www.python.org/downloads/"><img src="https://img.shields.io/badge/python-3.10+-blue.svg" alt="Python version"></a>
 </p>
 
-## 📌 Description
-Ce script analyse en continu les logs des requêtes arrivant sur le serveur web (Nginx/Apache) et détecte des anomalies à l'aide de l'API OpenAI. Il envoie une alerte par e-mail en cas de problème critique.
+🚀 **LogIAnalyzer** est un script Python qui surveille en continu les logs de votre serveur web et envoie des alertes par email en cas d'anomalies détectées.
 
 ## ✅ Prérequis
 - 🐍 Python 3
@@ -14,7 +13,7 @@ Ce script analyse en continu les logs des requêtes arrivant sur le serveur web 
 - 📧 Un serveur SMTP pour l'envoi d'e-mails
 - 📂 Un accès aux fichiers logs du serveur web
 
-## 🔧 Installation
+## 📦 Installation
 
 ### 1️⃣ Cloner le dépôt
 ```bash
@@ -27,63 +26,68 @@ cd LogIAnalyzer
 pip install -r requirements.txt
 ```
 
-### 3️⃣ Configurer les variables d'environnement
-Ajoute ces variables dans `/etc/environment` :
-```bash
-AI_API_KEY="ta_cle_api"
-SMTP_PASSWORD="ton_mot_de_passe"
-```
-Recharge les variables :
-```bash
-source /etc/environment
+### 3️⃣ Configurer les paramètres
+Créez un fichier **`config.ini`** dans le répertoire du script :
+```ini
+[Settings]
+log_files = /var/log/apache2/error.log, /var/log/apache2/access.log, /var/log/auth.log
+email_sender = ton_email@mail.com
+email_receiver = destinataire@mail.com
+smtp_server = smtp.mail.com
+smtp_port = 587
+log_check_interval = 300
+ai_temperature = 0.5
+ai_max_tokens = 4096
+daily_report_file = /var/log/log_analyzer_daily_report.txt
 ```
 
-### 4️⃣ Configurer `systemd` pour un démarrage automatique
-Crée un fichier de service :
+Définissez les **variables d'environnement** pour les données sensibles :
 ```bash
-sudo nano /etc/systemd/system/logianalyzer.service
+export AI_API_KEY="votre_cle_api_openai"
+export SMTP_PASSWORD="votre_mot_de_passe_smtp"
 ```
-Ajoute ceci :
+Pour les rendre permanentes, ajoutez-les à votre **`~/.bashrc`** ou **`~/.profile`**.
+
+## ⚙️ Utilisation avec systemd
+
+### 1️⃣ Créer un service systemd
+Créez le fichier **`/etc/systemd/system/logianalyzer.service`** :
 ```ini
 [Unit]
-Description=🚀 Surveillance et analyse des logs serveur
+Description=Surveillance des logs avec OpenAI
 After=network.target
 
 [Service]
-User=root  # Sinon, remplace par l’utilisateur qui a accès aux logs
+User=myuser  # Remplacez par l'utilisateur ayant accès aux logs
+Group=mygroup
 ExecStart=/usr/bin/python3 /chemin/vers/logianalyzer.py
-WorkingDirectory=/chemin/vers/LogIAnalyzer
 Restart=always
-User=ton_utilisateur
-Environment="AI_API_KEY=${AI_API_KEY}"
-Environment="SMTP_PASSWORD=${SMTP_PASSWORD}"
+Environment="AI_API_KEY=votre_cle_api_openai"
+Environment="SMTP_PASSWORD=votre_mot_de_passe_smtp"
 
 [Install]
 WantedBy=multi-user.target
 ```
 
-### (Ajouter l’utilisateur au groupe "adm", qui a accès aux logs, si besoin)
-```bash
-sudo usermod -aG adm myuser # Remplace par l’utilisateur qui a accès aux logs
-```
-
-### 5️⃣ Activer et démarrer le service
+### 2️⃣ Activer et démarrer le service
 ```bash
 sudo systemctl daemon-reload
 sudo systemctl enable logianalyzer
 sudo systemctl start logianalyzer
 ```
 
-### 6️⃣ Vérifier que le service fonctionne
+### 3️⃣ Vérifier le statut du service
 ```bash
 sudo systemctl status logianalyzer
 ```
 
-## 🔍 Logs et Debugging
-- 📜 Consulter les logs du service :
-```bash
-journalctl -u logianalyzer -f
-```
+## 📜 Logs et Rapports
+- **Fichier de rapport quotidien** : `/var/tmp/log_analyzer_daily_report.txt`
+- Pour consulter les logs du service :
+  ```bash
+  journalctl -u logianalyzer -f
+  ```
+
 - 🔄 Redémarrer le service après modification :
 ```bash
 sudo systemctl restart logianalyzer
@@ -97,6 +101,14 @@ sudo systemctl disable logianalyzer
 sudo rm /etc/systemd/system/logianalyzer.service
 sudo systemctl daemon-reload
 ```
+
+## ✅ Améliorations possibles
+✨ Ajouter la prise en charge de plusieurs modèles d'IA  
+✨ Affiner les alertes avec des seuils de gravité configurables  
+✨ Ajouter une interface web pour la visualisation des logs  
+
+---
+**🚀 Profitez d'une surveillance proactive et optimisée des logs avec l'IA !**
 
 ## 📜 Licence
 
