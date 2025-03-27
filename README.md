@@ -50,7 +50,7 @@ Définissez les **variables d'environnement** pour les données sensibles, ajout
 AI_API_KEY="ta_cle_api"
 SMTP_PASSWORD="ton_mot_de_passe"
 ```
-Rechargez les variables :
+Changez droits du fichier :
 ```bash
 sudo chmod 600 .env
 ```
