@@ -8,6 +8,9 @@ import schedule
 from email.mime.text import MIMEText
 from concurrent.futures import ThreadPoolExecutor
 from configparser import ConfigParser
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Load configuration from a file
 config = ConfigParser()

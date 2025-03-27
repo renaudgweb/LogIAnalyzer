@@ -13,7 +13,7 @@
 
 ## ✅ Prérequis
 - 🐍 Python 3
-- 🔑 Un compte OpenAI avec une clé API
+- 🔑 Un compte OpenAI ou Mistral AI avec une clé API
 - 📧 Un serveur SMTP pour l'envoi d'e-mails
 - 📂 Un accès aux fichiers logs du serveur web
 
@@ -45,14 +45,14 @@ ai_max_tokens = 4096
 daily_report_file = /var/log/log_analyzer_daily_report.txt
 ```
 
-Définissez les **variables d'environnement** pour les données sensibles, ajoutez ces variables dans `/etc/environment` :
+Définissez les **variables d'environnement** pour les données sensibles, ajoutez ces variables dans `.env` :
 ```bash
 AI_API_KEY="ta_cle_api"
 SMTP_PASSWORD="ton_mot_de_passe"
 ```
 Rechargez les variables :
 ```bash
-source /etc/environment
+sudo chmod 600 .env
 ```
 
 ## ⚙️ Utilisation avec systemd

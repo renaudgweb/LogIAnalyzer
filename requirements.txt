@@ -1,3 +1,4 @@
 # import openai
 mistralai
 schedule
+python-dotenv
