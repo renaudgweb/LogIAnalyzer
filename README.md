@@ -61,15 +61,13 @@ source /etc/environment
 Créez le fichier **`/etc/systemd/system/logianalyzer.service`** :
 ```ini
 [Unit]
-Description=Surveillance des logs avec OpenAI
+Description=Surveillance des logs avec IA
 After=network.target
 
 [Service]
 User=root  # Remplacez par l'utilisateur ayant accès aux logs
 ExecStart=/usr/bin/python3 /chemin/vers/logianalyzer.py
 Restart=always
-Environment="AI_API_KEY=votre_cle_api_ai"
-Environment="SMTP_PASSWORD=votre_mot_de_passe_smtp"
 
 [Install]
 WantedBy=multi-user.target
