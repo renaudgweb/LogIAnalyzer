@@ -1,7 +1,7 @@
-# 📊 LogIAnalyzer - Surveillance et Analyse des Logs avec IA
+# 🕵️‍♂️ LogIAnalyzer - Surveillance et Analyse des Logs avec IA
 
 <p align="center">
-  <img src="logo.jpg" alt="LogIAnalyzer logo" width="300"/>
+  <img src="logo.jpg" alt="LogIAnalyzer logo" width="600"/>
 </p>
 
 <p align="center">
@@ -9,7 +9,7 @@
   <a href="https://www.python.org/downloads/"><img src="https://img.shields.io/badge/python-3.10+-blue.svg" alt="Python version"></a>
 </p>
 
-🚀 **LogIAnalyzer** est un script Python qui surveille en continu les logs de votre serveur web et envoie des alertes par email en cas d'anomalies détectées.
+📊 **LogIAnalyzer** est un script Python qui surveille en continu les logs de votre serveur web et envoie des alertes par email en cas d'anomalies détectées.
 
 ## ✅ Prérequis
 - 🐍 Python 3
