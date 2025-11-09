@@ -25,6 +25,7 @@ EMAIL_RECEIVER = config.get('Settings', 'email_receiver')
 SMTP_SERVER = config.get('Settings', 'smtp_server')
 SMTP_PORT = config.getint('Settings', 'smtp_port')
 LOG_CHECK_INTERVAL = config.getint('Settings', 'log_check_interval')
+AI_MODEL = config.getfloat('Settings', 'ai_model')
 AI_TEMPERATURE = config.getfloat('Settings', 'ai_temperature')
 AI_MAX_TOKENS = config.getint('Settings', 'ai_max_tokens')
 DAILY_REPORT_FILE = config.get('Settings', 'daily_report_file')
@@ -83,7 +84,7 @@ def analyze_logs_with_ai(logs):
     try:
         client = Mistral(api_key=AI_API_KEY)
         response = client.chat.complete(
-            model="mistral-large-latest",
+            model=AI_MODEL,
             temperature=AI_TEMPERATURE,
             max_tokens=AI_MAX_TOKENS,
             messages=[
