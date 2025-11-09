@@ -106,6 +106,7 @@ email_receiver = destinataire@gmail.com
 smtp_server = smtp.gmail.com
 smtp_port = 587
 log_check_interval = 300
+ai_model = mistral-medium-latest
 ai_temperature = 0.5
 ai_max_tokens = 4096
 daily_report_file = /var/log/log_analyzer/daily_report.txt
@@ -261,7 +262,3 @@ renaudG
 
 - [Mistral AI](https://mistral.ai/) pour l'API d'analyse
 - La communauté open source pour les bibliothèques utilisées
-
----
-
-**⚠️ Note de sécurité** : Ne commettez JAMAIS vos fichiers `.env` ou `config.ini` avec des vraies valeurs. Utilisez toujours les fichiers `.example` comme templates.
