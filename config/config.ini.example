@@ -1,0 +1,99 @@
+[Settings]
+# ============================================
+# CONFIGURATION LOG ANALYZER
+# ============================================
+
+# Fichiers de logs à surveiller (séparés par des virgules)
+# IMPORTANT : Ces fichiers nécessitent des permissions de lecture appropriées
+# Exemples :
+#   - Logs Apache/Nginx : /var/log/apache2/error.log, /var/log/nginx/error.log
+#   - Logs système : /var/log/syslog, /var/log/auth.log
+#   - Logs application : /var/log/myapp.log
+log_files = /var/log/apache2/error.log, /var/log/apache2/access.log, /var/log/auth.log
+
+# ============================================
+# CONFIGURATION EMAIL
+# ============================================
+
+# Adresse email de l'expéditeur
+# IMPORTANT : Doit correspondre au compte SMTP configuré ci-dessous
+email_sender = votre_email@gmail.com
+
+# Adresse email du destinataire (pour recevoir les alertes)
+email_receiver = destinataire@gmail.com
+
+# ============================================
+# CONFIGURATION SERVEUR SMTP
+# ============================================
+
+# Serveur SMTP à utiliser
+# Exemples courants :
+#   - Gmail : smtp.gmail.com
+#   - Outlook : smtp-mail.outlook.com
+#   - Office365 : smtp.office365.com
+#   - Yahoo : smtp.mail.yahoo.com
+smtp_server = smtp.gmail.com
+
+# Port SMTP (généralement 587 pour STARTTLS, 465 pour SSL)
+smtp_port = 587
+
+# ============================================
+# PARAMÈTRES DE SURVEILLANCE
+# ============================================
+
+# Intervalle de vérification des logs en secondes
+# Valeurs recommandées :
+#   - 60 = 1 minute (test/développement)
+#   - 300 = 5 minutes (production standard)
+#   - 900 = 15 minutes (faible charge)
+log_check_interval = 300
+
+# ============================================
+# PARAMÈTRES INTELLIGENCE ARTIFICIELLE
+# ============================================
+
+# Modèle Mistral AI à utiliser
+# Modèles disponibles :
+#   - mistral-small-latest : Rapide et économique (recommandé pour tests)
+#   - mistral-medium-latest : Bon équilibre performance/coût
+#   - mistral-large-latest : Le plus performant (recommandé pour production)
+#   - open-mistral-7b : Open source, gratuit mais limité
+#   - open-mixtral-8x7b : Open source, bon compromis
+#   - open-mixtral-8x22b : Open source, très performant
+# Documentation : https://docs.mistral.ai/platform/endpoints/
+ai_model = mistral-medium-latest
+
+# Température de l'IA (contrôle la créativité des réponses)
+# Valeurs : 0.0 à 2.0
+#   - 0.0-0.3 : Très déterministe, répétitif
+#   - 0.4-0.7 : Équilibré (recommandé pour analyse)
+#   - 0.8-2.0 : Créatif, imprévisible
+ai_temperature = 0.5
+
+# Nombre maximum de tokens dans la réponse de l'IA
+# Valeurs recommandées :
+#   - 2048 : Analyses courtes
+#   - 4096 : Analyses détaillées (recommandé)
+#   - 8192 : Analyses très détaillées
+ai_max_tokens = 4096
+
+# ============================================
+# FICHIERS ET CHEMINS
+# ============================================
+
+# Fichier où sera stocké le rapport quotidien
+# IMPORTANT : Le programme doit avoir les permissions d'écriture
+# Exemples :
+#   - Production : /var/log/log_analyzer/daily_report.txt
+#   - Développement : ./logs/daily_report.txt
+#   - Home user : /home/username/log_analyzer/daily_report.txt
+daily_report_file = /var/log/log_analyzer/daily_report.txt
+
+# ============================================
+# NOTES IMPORTANTES
+# ============================================
+# 1. Les secrets (clés API, mots de passe) doivent être dans le fichier .env
+# 2. Pour Gmail, utilisez un "Mot de passe d'application" et non votre mot de passe principal
+#    https://myaccount.google.com/apppasswords
+# 3. Le rapport quotidien est envoyé automatiquement à 04:00 chaque jour
+# 4. Les alertes critiques (score >= 7) sont envoyées immédiatement

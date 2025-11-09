@@ -1,0 +1,73 @@
+[Unit]
+Description=Log Analyzer with AI - Security Monitoring and Analysis
+Documentation=https://github.com/your-username/log-analyzer
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=log_analyzer
+Group=log_analyzer
+WorkingDirectory=/opt/log_analyzer
+
+# Charger les variables d'environnement depuis le fichier .env
+EnvironmentFile=/etc/log_analyzer/.env
+
+# Commande d'exécution
+ExecStart=/usr/bin/python3 /opt/log_analyzer/src/log_monitor.py
+
+# Stratégie de redémarrage
+Restart=always
+RestartSec=10
+StartLimitInterval=200
+StartLimitBurst=5
+
+# Gestion des logs
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=log-analyzer
+
+# Restrictions de sécurité
+# Empêche l'acquisition de nouveaux privilèges
+NoNewPrivileges=true
+
+# Répertoire /tmp privé et isolé
+PrivateTmp=true
+
+# Protection du système de fichiers
+ProtectSystem=strict
+ProtectHome=true
+
+# Chemins accessibles en écriture
+ReadWritePaths=/var/log/log_analyzer
+
+# Chemins accessibles en lecture seule
+ReadOnlyPaths=/var/log
+
+# Protection de la configuration du noyau
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectKernelLogs=true
+
+# Protection du control groups
+ProtectControlGroups=true
+
+# Restrictions sur les appels système
+SystemCallFilter=@system-service
+SystemCallErrorNumber=EPERM
+
+# Limites de ressources
+# Limite le nombre de descripteurs de fichiers
+LimitNOFILE=1024
+
+# Limite l'utilisation CPU à 50%
+CPUQuota=50%
+
+# Limite la mémoire à 512 MB
+MemoryMax=512M
+
+# Timeout
+TimeoutStopSec=30
+
+[Install]
+WantedBy=multi-user.target

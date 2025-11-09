@@ -1,4 +1,26 @@
-# import openai
-mistralai
-schedule
-python-dotenv
+# ============================================
+# DÉPENDANCES LOG ANALYZER
+# ============================================
+
+# Client API Mistral AI pour l'analyse des logs
+mistralai>=1.0.0
+
+# Chargement des variables d'environnement depuis .env
+python-dotenv>=1.0.0
+
+# Programmation de tâches (rapport quotidien)
+schedule>=1.2.0
+
+# ============================================
+# INSTALLATION
+# ============================================
+# Pour installer toutes les dépendances :
+#   pip3 install -r requirements.txt
+#
+# Avec des permissions système :
+#   sudo pip3 install -r requirements.txt
+#
+# Dans un environnement virtuel :
+#   python3 -m venv venv
+#   source venv/bin/activate
+#   pip install -r requirements.txt
