@@ -14,7 +14,7 @@ YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
 # Vérifier si exécuté en tant que root
-if [ "$EUID" -ne 0 ]; then 
+if [ "$EUID" -ne 0 ]; then
     echo -e "${RED}❌ Ce script doit être exécuté avec sudo${NC}"
     exit 1
 fi

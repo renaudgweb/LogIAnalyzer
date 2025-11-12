@@ -22,9 +22,9 @@ TESTS_FAILED=0
 test_item() {
     local test_name="$1"
     local test_command="$2"
-    
+
     echo -n "  Testing $test_name... "
-    
+
     if eval "$test_command" &>/dev/null; then
         echo -e "${GREEN}✓ PASS${NC}"
         ((TESTS_PASSED++))
@@ -76,14 +76,14 @@ echo ""
 echo -e "${YELLOW}⚙️  Vérification du service systemd...${NC}"
 if [ -f "/etc/systemd/system/log-analyzer.service" ]; then
     test_item "Service installé" "[ -f /etc/systemd/system/log-analyzer.service ]"
-    
+
     if systemctl is-active --quiet log-analyzer 2>/dev/null; then
         echo -e "  ${GREEN}✓ Service actif${NC}"
         ((TESTS_PASSED++))
     else
         echo -e "  ${YELLOW}⚠ Service inactif${NC}"
     fi
-    
+
     if systemctl is-enabled --quiet log-analyzer 2>/dev/null; then
         echo -e "  ${GREEN}✓ Service activé au démarrage${NC}"
         ((TESTS_PASSED++))

@@ -82,10 +82,10 @@ test_model() {
     local model=$1
     echo -e "\n${YELLOW}🔍 Test du modèle : $model${NC}"
     echo "----------------------------------------"
-    
+
     # Modifier le config.ini temporairement
     sudo sed -i.bak "s/^ai_model.*/ai_model = $model/" "$CONFIG_FILE"
-    
+
     # Créer un script Python temporaire pour tester
     cat > /tmp/test_ai_model.py << PYEOF
 import sys
@@ -98,32 +98,32 @@ import time
 
 try:
     config = load_configuration()
-    
+
     with open('$TEST_LOG_FILE', 'r') as f:
         logs = f.readlines()
-    
+
     start_time = time.time()
     analysis = analyze_logs_with_ai(logs, config)
     end_time = time.time()
-    
+
     print(f"Modèle: $model")
     print(f"Temps: {end_time - start_time:.2f}s")
     print(f"Analyse:")
     print(analysis)
     print("\n" + "="*60 + "\n")
-    
+
 except Exception as e:
     print(f"ERREUR: {e}")
     sys.exit(1)
 PYEOF
-    
+
     # Exécuter le test
     if python3 /tmp/test_ai_model.py 2>&1 | tee -a "$RESULTS_FILE"; then
         echo -e "${GREEN}✓ Test réussi${NC}"
     else
         echo -e "${RED}✗ Test échoué${NC}"
     fi
-    
+
     echo "----------------------------------------"
     sleep 2
 }

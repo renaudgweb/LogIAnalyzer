@@ -23,7 +23,7 @@ ai_model = mistral-large-latest
 ai_temperature = 0.5
 ai_max_tokens = 4096
 ```
-**Avantages :** Meilleure détection d'anomalies, analyses plus précises, recommandations détaillées  
+**Avantages :** Meilleure détection d'anomalies, analyses plus précises, recommandations détaillées
 **Inconvénients :** Coût élevé, plus lent
 
 ### Production - Équilibré (RECOMMANDÉ)
@@ -32,7 +32,7 @@ ai_model = mistral-medium-latest
 ai_temperature = 0.5
 ai_max_tokens = 4096
 ```
-**Avantages :** Bon compromis qualité/coût, performances correctes  
+**Avantages :** Bon compromis qualité/coût, performances correctes
 **Inconvénients :** Légèrement moins précis que large
 
 ### Production - Économique
@@ -41,7 +41,7 @@ ai_model = mistral-small-latest
 ai_temperature = 0.4
 ai_max_tokens = 2048
 ```
-**Avantages :** Économique, rapide  
+**Avantages :** Économique, rapide
 **Inconvénients :** Moins de détails dans les analyses
 
 ### Développement/Tests
@@ -50,7 +50,7 @@ ai_model = open-mistral-7b
 ai_temperature = 0.5
 ai_max_tokens = 2048
 ```
-**Avantages :** Gratuit, idéal pour tester  
+**Avantages :** Gratuit, idéal pour tester
 **Inconvénients :** Qualité d'analyse réduite
 
 ## 💡 Conseils d'optimisation

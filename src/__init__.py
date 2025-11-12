@@ -11,7 +11,7 @@ avec intelligence artificielle (Mistral AI).
 
 __version__ = "1.0.0"
 __author__ = "renaudG"
-__email__ = "your.email@example.com"
+__email__ = "34276398+renaudgweb@users.noreply.github.com"
 
 # Imports principaux pour faciliter l'utilisation du package
 from .log_monitor import monitor_logs, analyze_logs_with_ai
